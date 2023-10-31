@@ -88,24 +88,25 @@ void sortPatients(patient patients[],int patient_size){
 
 //Inserta un paciente nuevo
 void fInstertPatientData(){
-    FILE * fpPatient = fopen(FILE_PATH_PATIENT,"rb");
-    fseek(fpPatient,0,SEEK_END);
-    fseek(fpPatient,(long)(-sizeof(patient)),SEEK_CUR);
+    file_res fPatient = openFile(FILE_PATH_PATIENT,"rb");
+    fseek(fPatient.fp,0,SEEK_END);
+    fseek(fPatient.fp,(long)(-sizeof(patient)),SEEK_CUR);
 
     patient lpatient;
     patient newPatient;
     patient_measures newMeasures;
-    if(fread(&lpatient,sizeof (lpatient),1,fpPatient)<= 0){
+    if(fread(&lpatient,sizeof (lpatient),1,fPatient.fp)<= 0){
         newPatient.HC = 1;
         newMeasures.HC = 1;
+    }else{
+        newPatient.HC = lpatient.HC + 1;
+        newMeasures.HC = lpatient.HC + 1;
     }
+    fclose(fPatient.fp);
+    fPatient.fp = NULL;
 
-    fclose(fpPatient);
-    fpPatient = NULL;
 
 
-    newPatient.HC = lpatient.HC + 1;
-    newMeasures.HC = lpatient.HC + 1;
 
     if(newPatient.HC >MAX_PATIENTS){
         printMessage("Maxima cantidad de pacientes alcanzada\n");
@@ -155,10 +156,10 @@ void fInstertPatientData(){
     fflush(stdin);
     scanf(" %c",&ans);
     if(ans == 's'){
-        fpPatient = fopen(FILE_PATH_PATIENT,"ab");
-        FILE * fpMeasures = fopen(FILE_PATH_MEASURES,"ab");
-        fwrite(&newPatient,sizeof (newPatient),1,fpPatient);
-        fwrite(&newMeasures,sizeof (newMeasures),1,fpMeasures);
+        fPatient = openFile(FILE_PATH_PATIENT,"ab");
+        file_res fMeasures = openFile(FILE_PATH_MEASURES,"ab");
+        fwrite(&newPatient,sizeof (newPatient),1,fPatient.fp);
+        fwrite(&newMeasures,sizeof (newMeasures),1,fMeasures.fp);
         system("cls");
         printMessage("Informacion guardada");
     }
