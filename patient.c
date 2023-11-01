@@ -11,34 +11,28 @@
 #include"patient.h"
 #include"generators.h"
 
-typedef struct{
-    int curr_range_idx;
-    int start[100]; // c1 = start
-    int found;
-    int eval_size;
-}find_res;
+
 
 // find: busca palabras detro del string
 find_res find(char str[],int str_size,char eval[30],int eval_size){
     int eidx = 0;
     find_res res;
     res.eval_size=eval_size;
-    res.curr_range_idx = 0;
+    res.start_len = 0;
     res.found = 0;
     if(eval_size <=0) return res;
     for(int i = 0; i < str_size;i++){
         if(eidx == eval_size){
             res.found = 1;
-            res.curr_range_idx++;
-            if(res.curr_range_idx >99) break;
+            res.start_len++;
+            if(res.start_len >99) break;
             eidx=0;
         }
         //printf("%d %c %c\n",eidx,eval[eidx],str[i]);
         if(str[i] == eval[eidx]){
-            if(eidx == 0) res.start[res.curr_range_idx] = i;
+            if(eidx == 0) res.start[res.start_len] = i;
             eidx++;
-        }
-        else if(eidx > 0) {
+        }else if(eidx > 0) {
             i--;
             eidx = 0;
         };
@@ -56,12 +50,16 @@ void highlight(char str[],int str_size,int start[],int start_size,int highlight_
     for(int i = 0;i < start_size;i++){
         aux = str_cpy[start[i]];
         str_cpy[start[i]] = '\0';
+
         printf("%s",&(str_cpy[print_idx]));
+
         str_cpy[start[i]] = aux;
         SetConsoleTextAttribute(hconsole(),10);
         aux = str_cpy[start[i]+highlight_len];
         str_cpy[start[i]+highlight_len] = '\0';
+
         printf("%s",&str_cpy[start[i]]);
+
         str_cpy[start[i]+highlight_len] = aux;
         SetConsoleTextAttribute(hconsole(),15);
         print_idx = start[i]+highlight_len;
@@ -327,7 +325,7 @@ int findPatient(){
     int matches;
     do {
         matches = 0;
-        if((c >= 48 && c <= 57) || c == 8 || (c >=65 && c<=90) || (c >=97 && c<=122) || c == 32) {
+        if((c >= 48 && c <= 57) || c == 8 || (c >=65 && c<=90) || (c >=97 && c<=122)) {
             if (c == '\b' && fidx > 0){
                 fidx--;
                 find_str[fidx] = '|';
@@ -357,12 +355,12 @@ int findPatient(){
             longToDate(&f_appointment,patients[i].f_apointment);
             double IMC = patients_measures[i].weight /(patients_measures[i].height * patients_measures[i].height);
 
-            sprintf(str," %-15s%-15s| %3d| %ld| %15s| %2.1f| %2d/%2d/%4d| %2d/%2d/%4d",patients[i].lastname,patients[i].name,
+            sprintf(str," %-15s%-15s| %3d| %8ld| %15s| %2.1f| %2d/%2d/%4d| %2d/%2d/%4d",patients[i].lastname,patients[i].name,
                     patients[i].HC,patients[i].DNI,patients[i].health_insurance,IMC,born_date.day,born_date.month,born_date.year,
                     f_appointment.day,f_appointment.month,f_appointment.year);
             find_res founded = find(str,100,find_str,fidx);
             if(founded.found){
-                highlight(str,100,founded.start,founded.curr_range_idx,fidx);
+                highlight(str,100,founded.start,founded.start_len,fidx);
                 matches++;
             }
             if(fidx == 0){

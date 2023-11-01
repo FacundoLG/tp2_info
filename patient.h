@@ -17,6 +17,12 @@ typedef struct{
     double weight;
 }patient_measures;
 
+typedef struct{
+    int start_len;
+    int start[100]; // c1 = start
+    int found;
+    int eval_size;
+}find_res;
 
 
 int fGenPatientData(int force,int quantity);
