@@ -26,7 +26,7 @@ typedef struct{
 
 
 int fGenPatientData(int force,int quantity);
-int fgenReport();
+int fgenReport(char * fname);
 void fInstertPatientData();
 int findPatient();
 

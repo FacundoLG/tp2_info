@@ -87,6 +87,7 @@ void sortPatients(patient patients[],int patient_size){
 //Inserta un paciente nuevo
 void fInstertPatientData(){
     file_res fPatient = openFile(FILE_PATH_PATIENT,"rb");
+    if(fPatient.err) return;
     fseek(fPatient.fp,0,SEEK_END);
     fseek(fPatient.fp,(long)(-sizeof(patient)),SEEK_CUR);
 
@@ -102,9 +103,6 @@ void fInstertPatientData(){
     }
     fclose(fPatient.fp);
     fPatient.fp = NULL;
-
-
-
 
     if(newPatient.HC >MAX_PATIENTS){
         printMessage("Maxima cantidad de pacientes alcanzada\n");
@@ -156,6 +154,7 @@ void fInstertPatientData(){
     if(ans == 's'){
         fPatient = openFile(FILE_PATH_PATIENT,"ab");
         file_res fMeasures = openFile(FILE_PATH_MEASURES,"ab");
+        if(fMeasures.err) return;
         fwrite(&newPatient,sizeof (newPatient),1,fPatient.fp);
         fwrite(&newMeasures,sizeof (newMeasures),1,fMeasures.fp);
         system("cls");
@@ -169,6 +168,7 @@ int fGenPatientData(int force,int amount){
         //Archivo PacientesDatos.dat no existe
         printLog("Generando archivo PacientesDatos.dat",0);
         file_res patient_f = openFile(FILE_PATH_PATIENT,"wb");
+        if(patient_f.err) return 1;
         //Generamos informacion inicial
         for(int i =0; i < amount;i++){
             patient p;
@@ -203,10 +203,13 @@ int fGenPatientData(int force,int amount){
     return 0;
 }
 
-int fgenReport(){
+int fgenReport(char * fname){
+    char path[50] = FILE_PATH_SUMMARY;
+    strcat(path,fname);
+    strcat(path,".txt");
     file_res patient_f = openFile(FILE_PATH_PATIENT,"rb");
     file_res measures_f = openFile(FILE_PATH_MEASURES,"rb");
-    file_res patientsummary_f = openFile(FILE_PATH_SUMMARY,"w");
+    file_res patientsummary_f = openFile(path,"w");
     if(patient_f.err || patientsummary_f.err || measures_f.err) return 1;
 
     int p_idx = 0;
@@ -221,7 +224,7 @@ int fgenReport(){
     char insurances[MAX_PATIENTS][30];
     int insurance_count[MAX_PATIENTS];
 
-    printLog("Generando archivo PacientesResumen.txt",0);
+    printLog("Generando archivo",0);
     fprintf(patientsummary_f.fp,"%3s|%s|%s|%s|%6s|%s\n","HC","EDAD","ALTURA[M]","PESO[KG]","IMC","PRIMERA CITA");
     while (fread(&pm,sizeof (pm),1,measures_f.fp) > 0) {
         patient_count++;
@@ -309,6 +312,7 @@ int findPatient(){
     int patient_size = 0;
     file_res fpatientsmeasures = openFile(FILE_PATH_MEASURES,"rb");
     file_res fpatients = openFile(FILE_PATH_PATIENT,"rb");
+    if(fpatients.err || fpatientsmeasures.err) return 1;
     while (fread(&patients[patient_size],sizeof (patient),1,fpatients.fp) > 0) {
         fread(&patients_measures[patient_size],sizeof(patient_measures),1,fpatientsmeasures.fp);
         patient_size++;

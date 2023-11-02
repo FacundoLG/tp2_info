@@ -3,7 +3,7 @@
 #include <windows.h>
 #include "log.h"
 
-int log_ = 1;
+int log_ = 0;
 int err_ = 1;
 
 HANDLE hconsole(){

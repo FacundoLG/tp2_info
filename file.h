@@ -2,9 +2,9 @@
 #define FILE_H
 #include <stdio.h>
 #include <stdlib.h>
-#define FILE_PATH_PATIENT "C:\\Users\\facu-\\Documents\\PacientesDatos.dat"
-#define FILE_PATH_MEASURES "C:\\Users\\facu-\\Documents\\PacientesTalla.dat"
-#define FILE_PATH_SUMMARY "C:\\Users\\facu-\\Documents\\PacientesResumen.txt"
+#define FILE_PATH_PATIENT "C:\\TP2\\PacientesDatos.dat"
+#define FILE_PATH_MEASURES "C:\\TP2\\PacientesTalla.dat"
+#define FILE_PATH_SUMMARY "C:\\TP2\\"
 
 typedef struct {
     FILE * fp;

@@ -4,8 +4,12 @@
 #include "log.h"
 #include "patient.h"
 
-int main()
+int main(int argc, char* argv[])
 {
+    if(argc < 2){
+        printErr("Falta argumento: nombre del archivo");
+        return 0;
+    }
     char res ;
     do{
         fflush(stdout);
@@ -16,7 +20,7 @@ int main()
 
         switch (res) {
             case '1':
-                 fgenReport();
+                 fgenReport(argv[1]);
             break;
             case '2':
                  findPatient();
