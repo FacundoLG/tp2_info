@@ -173,7 +173,7 @@ void gPatientMeasures(patient_measures * pat_m,patient p){
     f_call();
     pat_m->HC = p.HC;
     pat_m->born_date = p.born_date;
-    pat_m->height = 1.0 + (double)(rand() % 130)/100.0;
+    pat_m->height = 1.0 + (double)(rand() % 110)/100.0;
     pat_m->weight = (double)(50.0) + (double)(rand() % 60);
 
 }

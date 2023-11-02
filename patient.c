@@ -71,12 +71,17 @@ void highlight(char str[],int str_size,int start[],int start_size,int highlight_
 
 
 // Ordena los pacientes por orden alfabetico
-void sortPatients(patient patients[],int patient_size){
+void sortPatients(patient patients[],patient_measures patientsm[],int patient_size){
     for(int i = 0 ; i < patient_size-1;i++){
         if(strcmp(patients[i].lastname,patients[i+1].lastname)>0){
+            patient_measures maux = patientsm[i];
             patient aux = patients[i];
+
             patients[i] = patients[i+1];
+            patientsm[i] = patientsm[i+1];
             patients[i+1] = aux;
+            patientsm[i+1] = maux;
+
             if(i > 0){
                 i-=2;
             }
@@ -318,7 +323,7 @@ int findPatient(){
         patient_size++;
     }
 
-    sortPatients(patients,patient_size);
+    sortPatients(patients,patients_measures,patient_size);
 
     char find_str[100];
     for(int i = 0; i < 39;i++) find_str[i] = ' ';

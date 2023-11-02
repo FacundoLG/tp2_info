@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.11.1, 2023-11-01T21:40:56. -->
+<!-- Written by QtCreator 4.11.1, 2023-11-01T23:08:58. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -289,7 +289,7 @@
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:C:/Users/facu-/Documents/TP_2_INFO/TP_2_INFO.pro</value>
     <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">C:/Users/facu-/Documents/TP_2_INFO/TP_2_INFO.pro</value>
-    <value type="QString" key="RunConfiguration.Arguments">resumen</value>
+    <value type="QString" key="RunConfiguration.Arguments">elmegaresumen</value>
     <value type="bool" key="RunConfiguration.Arguments.multi">false</value>
     <value type="QString" key="RunConfiguration.OverrideDebuggerStartup"></value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
