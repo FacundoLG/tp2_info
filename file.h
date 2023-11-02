@@ -16,3 +16,4 @@ int doesFileExists(char * path);
 file_res openFile(char * filepath, char * mode);
 
 #endif // FILE_H
+
